@@ -1,0 +1,9 @@
+"backup and swap dir
+set backupdir=$HOME/.vimbackup
+set directory=$HOME/.vimbackup
+
+"make Vim's yank-buffer same as Clipboard"
+noremap v V
+vnoremap <silent> <C-c> :!pbcopy;pbpaste<ESC>
+vnoremap <silent> <C-x> :!pbcopy<ESC>
+
