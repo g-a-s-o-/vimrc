@@ -1,8 +1,15 @@
-" Additional Configurations "
-" Additional Configuration for Mac "
-if filereadable(expand('~/.vimrc.mac'))
-	source ~/.vimrc.mac
+" Additional Configurations depends on OS"
+if has("mac")
+  source ~/.vimrc.mac   
+elseif has("unix")
+  source ~/.vimrc.unix
+elseif has("win32")
+  source ~/.vimrc.win
 endif
+" Additional Configuration for Mac "
+" if filereadable(expand('~/.vimrc.mac'))
+" 	source ~/.vimrc.mac
+" endif
 
 " Turn off compatible mode
 " enables VIM's feature
