@@ -114,5 +114,5 @@ imap <C-h> <Left>
 imap <C-l> <Right>
 
 "Jump to next/previous place which is same indent"
-nn <C-k> k:call search ("^". matchstr (getline (line (".")+ 1),'\(\s*\)') ."\\S", 'b')<CR>^
-nn <C-j> :call search ("^". matchstr (getline (line (".")), '\(\s*\)')."\\S")<CR>^
+nn <C-p> k:call search ("^". matchstr (getline (line (".")+ 1),'\(\s*\)') ."\\S", 'b')<CR>^
+nn <C-n> :call search ("^". matchstr (getline (line (".")), '\(\s*\)')."\\S")<CR>^
