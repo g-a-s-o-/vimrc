@@ -1,10 +1,10 @@
 " Additional Configurations depends on OS"
 if has("mac")
-  source ~/.mac.vimrc
+  source ./.mac.vimrc
 elseif has("unix")
-  source ~/.unix.vimrc
+  source ./.unix.vimrc
 elseif has("win32")
-  source ~/.win.vimrc
+  source ./.win.vimrc
 endif
 " Additional Configurations "
 " Additional Configuration for Mac "
@@ -59,6 +59,20 @@ set incsearch
 "Syntax highlighting"
 syntax on
 
+"HardTab highlighting
+"	Need to set terminal support color in shell/screen configuration
+"	e.g.	in case screen:	'term xterm-256color'
+"		in case zsh:	'export TERM=xterm-256color'
+highlight HardTab cterm=none ctermbg=17
+autocmd BufWinEnter * 2 match HardTab /\t\+/
+
+"ColorColumn
+set colorcolumn=81,121
+highlight ColorColumn ctermfg=11 ctermbg=17
+
+" foldmethod
+"set foldmethod=syntax
+
 " Quickly time out on keycodes, but never time out on mappings
 set notimeout ttimeout ttimeoutlen=200
 
@@ -69,13 +83,13 @@ set notimeout ttimeout ttimeoutlen=200
 
 " Indentation settings for using 2 spaces instead of tabs.
 " Do not change 'tabstop' from its default value of 8 with this setup.
-set shiftwidth=2
-set softtabstop=2
+"set shiftwidth=2
+"set softtabstop=2
 "set expandtab
 
 " Indentation settings for using hard tabs for indent. Display tabs as two characters wide.
-"set shiftwidth=2
-"set tabstop=2
+set shiftwidth=8
+set tabstop=8
 " ============================================================
 
 " Display the cursor position on the last line of the screen or in the status line of a window
