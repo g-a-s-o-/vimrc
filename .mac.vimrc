@@ -6,7 +6,7 @@ set directory=$HOME/.vimbackup
 nmap <C-j> <ESC>:!clear; echo <C-r><C-w>; dict <C-r><C-w><CR>
 
 "make Vim's yank-buffer same as Clipboard"
-noremap v V
+"noremap v V
 vnoremap <silent> <C-c> :!pbcopy;pbpaste<ESC>
 vnoremap <silent> <C-x> :!pbcopy<ESC>
 
