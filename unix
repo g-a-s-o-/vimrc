@@ -1,0 +1,4 @@
+"backup and swap dir
+set backupdir=$HOME/.vim/backup
+set directory=$HOME/.vim/backup
+
