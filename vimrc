@@ -1,17 +1,3 @@
-" Additional Configurations depends on OS"
-"if has("mac")
-"  source ~/.mac.vimrc
-"elseif has("unix")
-"  source ~/.unix.vimrc
-"elseif has("win32")
-"  source ~/.win.vimrc
-"endif
-" Additional Configurations "
-" Additional Configuration for Mac "
-"if filereadable(expand('~/.mac.vimrc'))
-"	source ~/.mac.vimrc
-"endif
-
 " Turn off compatible mode
 " enables VIM's feature
 set nocompatible
