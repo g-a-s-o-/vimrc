@@ -88,8 +88,8 @@ set notimeout ttimeout ttimeoutlen=200
 "set expandtab
 
 " Indentation settings for using hard tabs for indent. Display tabs as two characters wide.
-set shiftwidth=8
-set tabstop=8
+set shiftwidth=4
+set tabstop=4
 " ============================================================
 
 " Display the cursor position on the last line of the screen or in the status line of a window
