@@ -1,6 +1,5 @@
-" Turn off compatible mode
-" enables VIM's feature
-set nocompatible
+" Shared Vim configuration.
+" Vim automatically enables 'nocompatible' when a vimrc is found.
 
 " One of the most important options to activate. Allows you to switch from an
 " unsaved buffer without saving it first. Also allows you to keep an undo
@@ -42,19 +41,30 @@ filetype indent plugin on
 "incremental search"
 set incsearch
 
-"Syntax highlighting"
-syntax on
+" Syntax highlighting (keep any highlighting already enabled by the GUI).
+syntax enable
 
 "HardTab highlighting
 "	Need to set terminal support color in shell/screen configuration
 "	e.g.	in case screen:	'term xterm-256color'
 "		in case zsh:	'export TERM=xterm-256color'
-highlight HardTab cterm=none ctermbg=17
-autocmd BufWinEnter * 2 match HardTab /\t\+/
+highlight HardTab cterm=none ctermbg=17 guibg=#00005f
+
+function! s:HighlightHardTabs() abort
+  if exists('w:hard_tab_match')
+    silent! call matchdelete(w:hard_tab_match)
+  endif
+  let w:hard_tab_match = matchadd('HardTab', '\t\+', 10)
+endfunction
+
+augroup vimrc_hard_tabs
+  autocmd!
+  autocmd BufWinEnter,WinEnter * call <SID>HighlightHardTabs()
+augroup END
 
 "ColorColumn
 set colorcolumn=81,121
-highlight ColorColumn ctermfg=11 ctermbg=17
+highlight ColorColumn ctermfg=11 ctermbg=17 guifg=#ffff00 guibg=#00005f
 
 " foldmethod
 "set foldmethod=syntax
@@ -108,16 +118,18 @@ set confirm
 
 " Use visual bell instead of beeping when doing something wrong
 set visualbell
+if exists('+belloff')
+  set belloff=all
+endif
 
-" And reset the terminal code for the visual bell.  If visualbell is set, and
-" this line is also included, vim will neither flash nor beep.  
-" If visualbell is unset, this does nothing.
-set t_vb=
+" Avoid an audible bell.  Do not override the obsolete terminal-specific
+" t_vb option; modern terminal and GUI builds handle visualbell themselves.
 
 "mouse setting
 set mouse= "disable use of mouse for all modes
 "set mouse=a "Enable use of the mouse for all modes
 
+" Display East Asian ambiguous-width characters as double-width.
 set ambiwidth=double
 
 
@@ -131,20 +143,26 @@ highlight FoldColumn guibg=DarkGray guifg=Blue gui=none ctermfg=Yellow ctermbg=D
 "Mapping
 
 " Map Y to act like D and C, i.e. to yank until EOL, Lather than act as yy, which is the default
-map Y y$
+nnoremap Y y$
 
 " Map <C-L> (redraw screen) to also turn off search highlighting until the next search
 nnoremap <C-L> :nohl<CR><C-L>
 
 "HJKL for INSERT mode
-imap <C-j> <Down>
-imap <C-k> <Up>
-imap <C-h> <Left>
-imap <C-l> <Right>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+
+" Many Unix terminals (including common RHEL console configurations) send
+" Ctrl-H for Backspace.  Mapping Ctrl-H there turns Backspace into Left.
+" GUI Vim can distinguish the keys, so retain the old shortcut only there.
+if has('gui_running')
+  inoremap <C-h> <Left>
+endif
 
 "Jump to next/previous place which is same indent"
-nn <C-p> k:call search ("^". matchstr (getline (line (".")+ 1),'\(\s*\)') ."\\S", 'b')<CR>^
-nn <C-n> :call search ("^". matchstr (getline (line (".")), '\(\s*\)')."\\S")<CR>^
+nnoremap <silent> <C-p> k:call search("^" . matchstr(getline(line('.') + 1), '\(\s*\)') . "\\S", 'b')<CR>^
+nnoremap <silent> <C-n> :call search("^" . matchstr(getline(line('.')), '\(\s*\)') . "\\S")<CR>^
 
 "C-n to move to next file
 " #$# C-n is already used so that need to fix other key

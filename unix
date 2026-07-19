@@ -1,4 +1,11 @@
-"backup and swap dir
-set backupdir=$HOME/.vim/backup
-set directory=$HOME/.vim/backup
-
+" State directories.  Vim requires these directories to exist.
+let s:vim_state_dir = expand('~/.vim')
+for s:dir in ['backup', 'swap', 'undo']
+  call mkdir(s:vim_state_dir . '/' . s:dir, 'p', 0700)
+endfor
+let &backupdir = s:vim_state_dir . '/backup//'
+let &directory = s:vim_state_dir . '/swap//'
+if has('persistent_undo')
+  let &undodir = s:vim_state_dir . '/undo//'
+  set undofile
+endif
