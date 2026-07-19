@@ -1,13 +1,7 @@
 {
-  "vim.autoindent": true,
   "vim.hlsearch": true,
-  "vim.ignorecase": true,
-  "vim.incsearch": true,
-  "vim.smartcase": true,
-  "vim.useCtrlKeys": true,
   "vim.useSystemClipboard": true,
   "vim.highlightedyank.enable": true,
-  "vim.highlightedyank.duration": 200,
   "vim.insertModeKeyBindingsNonRecursive": [
     {
       "before": ["<C-j>"],
@@ -24,16 +18,6 @@
     {
       "before": ["<C-l>"],
       "after": ["<Right>"]
-    }
-  ],
-  "vim.normalModeKeyBindingsNonRecursive": [
-    {
-      "before": ["Y"],
-      "after": ["y", "$" ]
-    },
-    {
-      "before": ["<C-l>"],
-      "commands": [":nohl"]
     }
   ],
   "vim.handleKeys": {
