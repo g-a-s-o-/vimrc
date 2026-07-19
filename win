@@ -1,4 +1,18 @@
-"backup and swap dir
-set backupdir=$VIM/vimbackup
-set directory=$VIM/vimbackup
+" Keep user state out of the Vim installation directory (often read-only).
+let s:vim_state_dir = !empty($LOCALAPPDATA)
+      \ ? expand('$LOCALAPPDATA/vim')
+      \ : expand('~/vimfiles')
+for s:dir in ['backup', 'swap', 'undo']
+  call mkdir(s:vim_state_dir . '/' . s:dir, 'p')
+endfor
+let &backupdir = s:vim_state_dir . '/backup//'
+let &directory = s:vim_state_dir . '/swap//'
+if has('persistent_undo')
+  let &undodir = s:vim_state_dir . '/undo//'
+  set undofile
+endif
 
+" gVim has direct access to the Windows clipboard.
+if has('gui_running') && has('clipboard')
+  set clipboard^=unnamedplus
+endif
