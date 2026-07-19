@@ -148,16 +148,15 @@ nnoremap Y y$
 " Map <C-L> (redraw screen) to also turn off search highlighting until the next search
 nnoremap <C-L> :nohl<CR><C-L>
 
-"HJKL for INSERT mode
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-l> <Right>
-
-" Many Unix terminals (including common RHEL console configurations) send
-" Ctrl-H for Backspace.  Mapping Ctrl-H there turns Backspace into Left.
-" GUI Vim can distinguish the keys, so retain the old shortcut only there.
-if has('gui_running')
+" Ctrl-H/J/K/L cursor movement for INSERT mode.
+" Many Unix terminals send Ctrl-H for Backspace, so enable the four-key set
+" only in GUI Vim by default.  Terminal users can opt in from a platform file
+" with: let g:vimrc_insert_ctrl_hjkl = 1
+if get(g:, 'vimrc_insert_ctrl_hjkl', has('gui_running'))
   inoremap <C-h> <Left>
+  inoremap <C-j> <Down>
+  inoremap <C-k> <Up>
+  inoremap <C-l> <Right>
 endif
 
 "Jump to next/previous place which is same indent"
