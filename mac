@@ -1,12 +1,28 @@
-"backup and swap dir
-set backupdir=$HOME/.vim/backup
-set directory=$HOME/.vim/backup
+" State directories.  Vim requires these directories to exist.
+let s:vim_state_dir = expand('~/.vim')
+for s:dir in ['backup', 'swap', 'undo']
+  call mkdir(s:vim_state_dir . '/' . s:dir, 'p', 0700)
+endfor
+let &backupdir = s:vim_state_dir . '/backup//'
+let &directory = s:vim_state_dir . '/swap//'
+if has('persistent_undo')
+  let &undodir = s:vim_state_dir . '/undo//'
+  set undofile
+endif
+
+" MacVim exposes the system clipboard as the unnamed-plus register.
+if has('gui_macvim') && has('clipboard')
+  set clipboard^=unnamedplus
+endif
 
 "for dict
-nmap <C-j> <ESC>:!clear; echo <C-r><C-w>; dict <C-r><C-w><CR>
+if executable('dict')
+  nnoremap <silent> <Leader>d :<C-u>execute '!clear; echo ' . shellescape(expand('<cword>')) . '; dict ' . shellescape(expand('<cword>'))<CR>
+endif
 
 "make Vim's yank-buffer same as Clipboard"
 "noremap v V
-vnoremap <silent> <C-c> :!pbcopy;pbpaste<ESC>
-vnoremap <silent> <C-x> :!pbcopy<ESC>
-
+if !has('clipboard') && executable('pbcopy')
+  vnoremap <silent> <C-c> :w !pbcopy<CR><CR>
+  vnoremap <silent> <C-x> :w !pbcopy<CR>gvx
+endif
